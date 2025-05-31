@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
 
 // Define constants for the Sudoku grid
 #define GRID_SIZE 9
@@ -87,7 +86,7 @@ void readGrid(int grid[GRID_SIZE][GRID_SIZE]) {
     }
 }
 
-int main(int argc, char *argv[]) {
+int main() {
     int grid[GRID_SIZE][GRID_SIZE] = {0};
     char command;
 
@@ -99,14 +98,20 @@ int main(int argc, char *argv[]) {
     scanf(" %c", &command);
 
     if (command == '1') {
-        readGrid(grid);
-        printGrid(grid);
-        if (solveSudoku(grid)) {
-            printf("Puzzle solved!\n");
+        char again;
+        do {
+            readGrid(grid);
             printGrid(grid);
-        } else {
-            printf("No solution exists!\n");
-        }
+            if (solveSudoku(grid)) {
+                printf("Puzzle solved!\n");
+                printGrid(grid);
+            } else {
+                printf("No solution exists!\n");
+            }
+
+            printf("Solve another puzzle? (y/n): ");
+            scanf(" %c", &again);
+        } while (again == 'y' || again == 'Y');
     } else if (command == '2') {
         printf("Commands:\n");
         printf("  i <row> <col> <value> : Insert value (1-9) at row, col (1-9)\n");
